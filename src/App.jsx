@@ -3,7 +3,10 @@ import { BrowserRouter as Router, Switch, Route, Link, NavLink } from "react-rou
 import { Home } from './components/Home'
 import { OX } from './components/OX/OX'
 import { AB } from './components/AB/AB'
+
+
 class App extends Component {
+
     constructor() {
         super();
         this.state = {
@@ -37,19 +40,35 @@ class App extends Component {
             user: event.target.value
         })
     }
+
     render() {
+        var loginPrompt = {
+            textAlign: 'center',
+            paddingTop: '55px',
+            paddingBottom: '15px',
+            color: '#fff',
+            textShadow: '0 0 10px #ff006c, 0 0 20px #ff006c, 0 0 40px #ff417d',
+            margin: '0px'
+        };
+
+        var formStyle = {
+            textAlign: 'center',
+            paddingTop: '15px',
+            marginLeft: 'auto',
+            marginRight: 'auto'
+        };
         if (this.state.isLogined) {
             return (
-                <div>
-                    <Router>
-                        <div>
-                            <h2>Games</h2>
-                            <ul>
-                                <li><Link to={'/ooxx'}>圈圈叉叉</Link></li>
-                                <li><Link to={'/aabb'}>數字猜猜</Link></li>
-                                <li><Link to={'/'}>回首頁</Link></li>
-                            </ul>
-                            <hr />
+                <Router>
+                    <div className="container">
+                        <img className="logo" src="./asset/logo.png" />
+                        <ul className="gameList">
+                            <li><Link to={'/ooxx'}>圈圈叉叉</Link></li>
+                            <li><Link to={'/aabb'}>數字猜猜</Link></li>
+                            <li><Link to={'/'}>回首頁</Link></li>
+                        </ul>
+                        <hr style={{ marginTop: '150px' }} />
+                        <div className="notebook">
                             <Switch>
                                 <Route exact path="/" component={Home} children={
                                     <Home user={this.state.user} onClick={this.logout} />
@@ -58,18 +77,20 @@ class App extends Component {
                                 <Route exact path='/aabb' component={AB} />
                             </Switch>
                         </div>
-                    </Router>
-                </div>
+                    </div>
+                </Router>
             );
         }
         else {
             return (
-                <div>
-                    <h1>你好，先登入一下如何？</h1>
-                    <form onSubmit={this.login}>
-                        <input type="text" placeholder="請輸入您的大名" onChange={this.handleChange} />
-                        <input type="submit" value="確認" />
-                    </form>
+                <div className="animateBg">
+                    <div className="loginBlock">
+                        <h1 style={loginPrompt} >你好，先登入一下如何？</h1>
+                        <form style={formStyle} onSubmit={this.login}>
+                            <input type="text" placeholder="請輸入您的大名" onChange={this.handleChange} />
+                            <input type="submit" value="確認" />
+                        </form>
+                    </div>
                 </div>
             );
         }
